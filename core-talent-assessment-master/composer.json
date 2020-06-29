@@ -1,0 +1,15 @@
+{
+    "name": "weglot/core-talent-assessment",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0": {
+            "": "app/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "ext-zip": "*",
+        "phpunit/phpunit": "4.8.*",
+        "phpspec/prophecy": ">=1.1"
+    }
+}

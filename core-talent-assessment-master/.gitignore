@@ -1,0 +1,6 @@
+*~
+.DS_Store
+.idea
+.id_rsa
+composer.lock
+/vendor
