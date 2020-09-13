@@ -35,21 +35,19 @@ class OffsetEncodingAlgorithm implements EncodingAlgorithm
      */
     public function encode($text)
     {
-        $newText= '';
-        $characters = str_split(self::CHARACTERS);
-        $text = str_split($text);
-        foreach($text as $i => $letter) {
-            foreach($characters as $key => $value){
-                if($letter == $value){
-                    $newKey = $key + $this->offset;
-                    if($newKey > 51) $newKey = $newKey - 52;
-                    $text[$i] = $characters[$newKey];              
-                }
-            } 
+        $characters = self::CHARACTERS;
+        for($i = 0, $l = strlen($text); $i < $l; $i++) {
+            // on récupére la position de la lettre dans CHARACTERS
+            $position = strpos($characters, $text[$i]);
+            // on vérifie si la position est trouvé
+            if ($position !== false) {
+                // on calcul la position de la lettre de remplacement
+                $key = $position + $this->offset;
+                $key =  $key > 51 ? $key - 52 : $key;
+                $text[$i] = $characters[$key];
+            }
         }
-        foreach($text as $letter) {
-            $newText .= $letter;
-        }
-        return $newText;
+        return $text;
     }
+
 }

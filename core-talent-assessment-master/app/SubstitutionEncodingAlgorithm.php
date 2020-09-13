@@ -33,22 +33,17 @@ class SubstitutionEncodingAlgorithm implements EncodingAlgorithm
     public function encode($text)
     {
         $noLetters = array(" ", ".", "?", "!", "/", "=", "+", ":", ",", ";");
+        // on vérifie si toutes les lettres sont des majuscules
         $isMajuscule = ctype_upper(str_replace($noLetters, "", $text));
-        $text = str_split($text);
-        $newText = '';
         foreach($this->substitutions as $substitution) {
-            foreach($text as $key => $letter) {
-                if(($substitution[0] == $letter) || (strtoupper($substitution[0]) == $letter)) {
-                    $text[$key] = $substitution[1]; 
-                } else if(($substitution[1] == $letter) || (strtoupper($substitution[1]) == $letter)) {
-                    $text[$key] = $substitution[0];              
-                }
+            if($isMajuscule) {
+                $substitution[0] = strtoupper($substitution[0]);
+                $substitution[1] = strtoupper($substitution[1]);
             }
+            // on inverse les lettres
+            $trans = array($substitution[0] => $substitution[1], $substitution[1] => $substitution[0]);
+            $text = strtr($text, $trans);
         }
-        foreach($text as $letter) {
-            $newText .= $letter;
-        }
-        if($isMajuscule) return strtoupper($newText);
-        return $newText;
+        return $text;
     }
 }
